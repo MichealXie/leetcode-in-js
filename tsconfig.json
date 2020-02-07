@@ -1,0 +1,34 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "alwaysStrict": true,
+    "charset": "utf8",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "inlineSourceMap": true,
+    "module": "commonjs",
+    "newLine": "lf",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "outDir": "dist",
+    "pretty": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "stripInternal": true,
+    "importHelpers": true,
+    "checkJs": true,
+    "target": "ES2018"
+  },
+  "exclude": [
+    "app/public",
+    "app/views",
+    "dist",
+    "node_modules",
+    "test"
+  ]
+}
