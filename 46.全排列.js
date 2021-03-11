@@ -25,6 +25,7 @@ var permute = function (nums) {
 
       used[i] = true
       cur.push(nums[i])
+      // 当 i = 2时, 进入 helper, 出来后 2 的 used 又变 false 了, 然后就是 [1, 3, 2]
       helper(cur, used)
       used[i] = false
       cur.pop()
