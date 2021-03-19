@@ -17,31 +17,18 @@
  * @return {TreeNode}
  */
 var constructMaximumBinaryTree = function(nums) {
-  function findMaxIndex(arr) {
-    if (arr.length === 1) return 0
+  if (nums.length === 0) return null
+  if (nums.length === 1) return new TreeNode(nums[0])
 
-    let maxIndex = 0
+  const maxIndex = nums.indexOf(Math.max(...nums))
+  const left = nums.slice(0, maxIndex)
+  const right = nums.slice(maxIndex + 1)
 
-    for(let i = 0; i < arr.length;i++) {
-      if (arr[i] > arr[maxIndex]) maxIndex = i
-    }
+  const root = new TreeNode(nums[maxIndex])
+  root.left = constructMaximumBinaryTree(left)
+  root.right = constructMaximumBinaryTree(right)
 
-    return maxIndex
-  }
-
-  function helper(nums) {
-    if (nums.length === 1) return new TreeNode(nums[0])
-    if (nums.length < 1) return null
-
-    const maxIndex = findMaxIndex(nums)
-    const root = new TreeNode(nums[maxIndex])
-    root.left = helper(nums.slice(0, maxIndex))
-    root.right = helper(nums.slice(maxIndex + 1, nums.length))
-    return root
-  }
-
-  return helper(nums)
-
+  return root
 };
 // @lc code=end
 
