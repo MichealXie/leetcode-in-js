@@ -12,67 +12,59 @@
  *     this.next = null;
  * }
  */
+function reverseListNode(node) {
+  if (!node || !node.next) return node
+
+  let prev = null
+  while(node) {
+    const tempNext = node.next
+    node.next = prev
+    prev = node
+
+    node = tempNext
+  }
+
+  return prev
+}
+
 /**
  * @param {ListNode} head
  * @return {void} Do not return anything, modify head in-place instead.
  */
-function reverseListNode(node) {
-  if (!node || !node.next) return node
-
-  const last = reverseListNode(node.next)
-  node.next.next = node
-  node.next = null
-
-  return last
-}
-
 var reorderList = function (head) {
-  if (!head || !head.next) return head
+  if (!head || !head.next) return
 
-  let fast = head
   let slow = head
+  let fast = head
   let prev = null
+
   while (fast && fast.next) {
     prev = slow
-    fast = fast.next.next
     slow = slow.next
+    fast = fast.next.next
   }
 
-  let first = head
-  let sec = reverseListNode(prev.next)
-  slow.next = null
+  prev.next = null
+  let left = head
+  let right = reverseListNode(slow)
 
-  linkListToList(sec)
-  let isFirst = true
-  let dummyNode = new ListNode(null)
-  let node = new ListNode(null)
-  dummyNode.next = node
-  // 这个写法较为繁琐
-  // 可以只判断 sec, 但是 slow 的指针要往后走一个
-  // 不知道为什么, 感觉是错的..
-  while (first && sec) {
-    if (isFirst) {
-      node.next = first
-      first = first.next
-    } else {
-      node.next =sec 
-      sec = sec.next
+  // left right 的长度差距最大只有1, 因为长度要么奇数要么偶数
+  while(left && right) {
+    const tempLeftNext = left.next
+    left.next = right
+    left = tempLeftNext
+
+    const tempRightNext = right.next
+    right.next = tempLeftNext
+    right = tempRightNext
+  }
+
+  if (!left && right) {
+    while(head.next) {
+      head = head.next
     }
-
-    isFirst = !isFirst
-    node = node.next
+    head.next = right
   }
-  if (first) {
-      node.next = first
-      first = first.next
-  }
-  if (sec) {
-      node.next =sec 
-      sec = sec.next
-  }
-  // linkListToList(dummyNode.next.next)
-  
-  return dummyNode.next.next
 };
 // @lc code=end
 

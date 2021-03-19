@@ -23,35 +23,92 @@ function ListNode(val) {
   this.next = null;
 }
 var reverseBetween = function (head, m, n) {
-  console.log(head)
-  // 迭代
-  const dummyHead = new ListNode(null)
-  dummyHead.next = head
-  let temp = dummyHead
-  // 找到第 m - 1 节点
-  for (let i = 1; i < m;i++) {
-    temp = dummyHead.next
-  }
-  console.log(temp)
+  // 自己想出来的
+  function reverseListNode(node) {
+    if (!node || !node.next) return node
+    const last = reverseListNode(node.next)
+    node.next.next = node
+    node.next = null
 
-  let prev = null
-  let next = head.next
-  // 注意循环后到 n 的下一个值了
-  // prev 是 n
-  // head 是 n + 1
-  for(let i = 0;i <= n - m;i++) {
-    next = head.next
-    head.next = prev
-    prev = head
-    head = next
+    return last
   }
-  console.log(prev)
-  // 老是忘记接上...
-  temp.next.next = head // 2 接 5
-  temp.next = prev; // 1 接 4
 
-  console.log(dummyHead)
-  return dummyHead.next
+  if (m === n) return head
+  let dummyHead = head
+  let left = null
+  while(m > 1) {
+    if (m === 2) {
+      left = head
+    }
+    head = head.next
+    m--
+    n--
+  }
+  let mid = head
+
+  let right = null
+  while(n !== 1) {
+    head = head.next
+    n--
+  }
+
+  right = head.next
+  head.next = null
+
+  mid = reverseListNode(mid)
+  if (!left && !right) {
+    return mid
+  }
+  if (!left) {
+    dummyHead = mid
+    while(mid.next) {
+      mid = mid.next
+    }
+    mid.next = right
+
+    return dummyHead
+  }
+
+  left.next = mid
+  while(mid.next) {
+    mid = mid.next
+  }
+  mid.next = right
+
+  return dummyHead
+
+
+
+
+  // console.log(head)
+  // // 迭代
+  // const dummyHead = new ListNode(null)
+  // dummyHead.next = head
+  // let temp = dummyHead
+  // // 找到第 m - 1 节点
+  // for (let i = 1; i < m;i++) {
+  //   temp = dummyHead.next
+  // }
+  // console.log(temp)
+
+  // let prev = null
+  // let next = head.next
+  // // 注意循环后到 n 的下一个值了
+  // // prev 是 n
+  // // head 是 n + 1
+  // for(let i = 0;i <= n - m;i++) {
+  //   next = head.next
+  //   head.next = prev
+  //   prev = head
+  //   head = next
+  // }
+  // console.log(prev)
+  // // 老是忘记接上...
+  // temp.next.next = head // 2 接 5
+  // temp.next = prev; // 1 接 4
+
+  // console.log(dummyHead)
+  // return dummyHead.next
 
 
 
