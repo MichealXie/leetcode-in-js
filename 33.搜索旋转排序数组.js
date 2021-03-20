@@ -11,40 +11,34 @@
  * @return {number}
  */
 var search = function(nums, target) {
+  // 先分左右, 再判断是否在线性区间, 注意内部判断有等于号
+  if (!nums.length) return -1 
   let start = 0
   let end = nums.length - 1
   let mid
 
-  while (start < (end - 1)) {
-    mid = Math.round((start + end) / 2)
-
-    if (nums[mid] === target) {
-      return mid
-    // 先区分是在断点左还是右
-    } else if (nums[mid] > nums[start]) {
-      // 再判断是否在线性区间
-      // 线性区间也能搜索, 因为二分的核心是缩小范围
-      // 非线性区间则类似递归处理
+  while(start < end - 1) {
+    mid = Math.round(start + (end - start) / 2)
+    if (target === nums[mid]) return mid
+    // 左边
+    if (nums[mid] > nums[start]) {
       if (target >= nums[start] && nums[mid] >= target) {
-        // 这里两个等于是为了处理不麻烦, 两个不好拆出来
         end = mid
-      }else {
+      } else {
         start = mid
       }
+    // 右边
     } else {
-      if (target <= nums[end] && nums[mid] <= target) {
+      if (target <= nums[end] && target >= nums[mid]) {
         start = mid
-      }else {
+      } else {
         end = mid
       }
     }
   }
-  
-  if (target === nums[start]) {
-    return start
-  } else if (target === nums[end]) {
-    return end
-  }
+
+  if (nums[start] === target) return start
+  if (nums[end] === target) return end
 
   return -1
 };

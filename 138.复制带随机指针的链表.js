@@ -53,6 +53,7 @@
 //   head = dummyOrigin.next
 //   return dummyCopied.next
 // }
+const map = new Map()
 var copyRandomList = function (head) {
   // 这个做法是对的, sb leetcode 过不了
   // 提示 Next pointer of node with label 1 from the original list was modified.
@@ -60,24 +61,37 @@ var copyRandomList = function (head) {
   // copyRandom(head)
   // return splitCopied(head)
 
-  // 用 map
+  // 用 map, 缺点是 两次迭代 + 1个额外空间
+  // if (!head) return head
+  // const map = new Map()
+  // const dummyHead = head
+  // while (head) {
+  //   map.set(head, new Node(head.val, null, null))
+  //   head = head.next
+  // }
+  // head = dummyHead
 
+  // while (head) {
+  //   map.get(head).next = head.next === null ? null: map.get(head.next)
+  //   map.get(head).random = head.random === null ? null : map.get(head.random)
+  //   head = head.next
+  // }
+
+  // return map.get(dummyHead)
+
+
+  // 递归, 只占用一个额外空间
   if (!head) return head
-  const map = new Map()
-  const dummyHead = head
-  while (head) {
-    map.set(head, new Node(head.val, null, null))
-    head = head.next
+  let node = map.get(head)
+  if (node) {
+    return node
   }
-  head = dummyHead
+  node = new Node(head.val, null, null)
+  map.set(head, node)
+  node.next = copyRandomList(head.next)
+  node.random = copyRandomList(head.random)
 
-  while (head) {
-    map.get(head).next = head.next === null ? null: map.get(head.next)
-    map.get(head).random = head.random === null ? null : map.get(head.random)
-    head = head.next
-  }
-
-  return map.get(dummyHead)
+  return node
 };
 
 // @lc code=end
