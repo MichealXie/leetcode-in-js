@@ -23,10 +23,10 @@ var swapPairs = function(head) {
   if (!head || !head.next) {
     return head
   }
-  let next = head.next
-  let nextNext = head.next.next
 
   // 3. 操作: 交换节点
+  let next = head.next
+  let nextNext = head.next.next
   head.next = swapPairs(nextNext)
   next.next = head
   

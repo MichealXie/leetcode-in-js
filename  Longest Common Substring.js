@@ -24,4 +24,4 @@ const longestCommonSubstring = function (A, B) {
   return max
 }
 
-console.log(longestCommonSubstring('abc','a'))
+console.log(longestCommonSubstring('abc','abssdc'))

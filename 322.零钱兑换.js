@@ -11,22 +11,21 @@
  * @return {number}
  */
 var coinChange = function (coins, amount) {
-  // 初始化很重要...
-  const dp = Array(amount + 1).fill(Infinity)
-  dp[0] = 0
-
-  for (let i = 1; i <= amount; i++) {
-    for (let coin of coins) {
-      if (i >= coin) {
-        // 拿与不拿
-        dp[i] = Math.min(dp[i], 1 + dp[i - coin])
+  const states = Array(amount + 1).fill(Infinity)
+  states[0] = 0
+  for(let i = 1;i <= amount; i++) {
+    for (const coin of coins) {
+      if (i - coin >= 0) {
+        states[i] = Math.min(states[i - coin] + 1, states[i])
       }
     }
   }
+  console.log(states)
 
-  return dp[amount] === Infinity ? -1 : dp[amount]
+  return states[states.length - 1] === Infinity ? -1 : states[states.length - 1]
 };
 // @lc code=end
 
-coinChange([1, 2, 5, 11], 11)
-coinChange([2], 3)
+console.log(coinChange([1, 2, 5, 11], 11)) 
+console.log(coinChange([2], 3))
+

@@ -22,8 +22,11 @@ var jump = function(nums) {
       }
     }
   }
+  console.log(steps)
 
   return steps[nums.length - 1]
 };
 // @lc code=end
 
+
+jump([2,3,1,1,4])
